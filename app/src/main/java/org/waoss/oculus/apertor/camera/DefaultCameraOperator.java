@@ -24,10 +24,12 @@ public class DefaultCameraOperator implements CameraOperator {
     private CameraSourcePreview cameraSourcePreview;
 
     public DefaultCameraOperator(final Activity activity, final String tag,
-                                 final EyesClosedListener eyesClosedListener) {
+                                 final EyesClosedListener eyesClosedListener,
+                                 final CameraSourcePreview cameraSourcePreview) {
         this.activity = activity;
         this.tag = tag;
         this.eyesClosedListener = eyesClosedListener;
+        this.cameraSourcePreview = cameraSourcePreview;
     }
 
     public void createAndStartCameraSource() {
