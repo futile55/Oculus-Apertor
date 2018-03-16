@@ -4,6 +4,14 @@ import android.content.Context;
 import com.google.android.gms.vision.CameraSource;
 
 public class DefaultCameraOperator implements CameraOperator {
+    private final Context context;
+    private CameraSource cameraSource;
+    private boolean isFrontFacing;
+
+    public DefaultCameraOperator(final Context context) {
+        this.context = context;
+    }
+
     @Override
     public void createCameraSource() {
 
@@ -21,6 +29,20 @@ public class DefaultCameraOperator implements CameraOperator {
 
     @Override
     public CameraSource getCameraSource() {
-        return null;
+        if (cameraSource != null) {
+            return cameraSource;
+        }
+        createCameraSource();
+        return cameraSource;
+    }
+
+    @Override
+    public boolean isFrontFacing() {
+        return isFrontFacing;
+    }
+
+    @Override
+    public void setFrontFacing(final boolean isFrontFacing) {
+        this.isFrontFacing = isFrontFacing;
     }
 }

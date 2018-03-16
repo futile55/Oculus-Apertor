@@ -11,4 +11,8 @@ public interface CameraOperator {
     void createFaceDetector(Context context);
 
     CameraSource getCameraSource();
+
+    boolean isFrontFacing();
+
+    void setFrontFacing(boolean isFrontFacing);
 }
