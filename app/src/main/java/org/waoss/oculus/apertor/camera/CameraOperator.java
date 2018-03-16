@@ -2,13 +2,14 @@ package org.waoss.oculus.apertor.camera;
 
 import android.content.Context;
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.face.FaceDetector;
 
 public interface CameraOperator {
     void createCameraSource();
 
     void startCameraSource();
 
-    void createFaceDetector(Context context);
+    FaceDetector createFaceDetector(Context context);
 
     CameraSource getCameraSource();
 
