@@ -19,6 +19,7 @@
         android:layout_height="48dp"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
+        android:onClick="onFlipButtonClicked"
         android:text="Flip" />
 
 </android.support.constraint.ConstraintLayout>

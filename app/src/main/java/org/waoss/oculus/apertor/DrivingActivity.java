@@ -138,4 +138,13 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
                 .setPositiveButton("ok", listener)
                 .show();
     }
+
+    public void onFlipButtonClicked(final View view) {
+        defaultCameraOperator.setFrontFacing(!defaultCameraOperator.isFrontFacing());
+        if (defaultCameraOperator.getCameraSource() != null) {
+            defaultCameraOperator.getCameraSource().release();
+            defaultCameraOperator.setCameraSource(null);
+        }
+        defaultCameraOperator.createAndStartCameraSource();
+    }
 }

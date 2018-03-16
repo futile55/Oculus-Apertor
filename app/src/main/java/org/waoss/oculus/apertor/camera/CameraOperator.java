@@ -13,6 +13,8 @@ public interface CameraOperator {
 
     CameraSource getCameraSource();
 
+    void setCameraSource(CameraSource cameraSource);
+
     boolean isFrontFacing();
 
     void setFrontFacing(boolean isFrontFacing);

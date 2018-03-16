@@ -79,6 +79,11 @@ public class DefaultCameraOperator implements CameraOperator {
     }
 
     @Override
+    public void setCameraSource(final CameraSource cameraSource) {
+        this.cameraSource = cameraSource;
+    }
+
+    @Override
     public boolean isFrontFacing() {
         return isFrontFacing;
     }
