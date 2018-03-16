@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
@@ -89,7 +92,15 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
 
     @Override
     public void onEyesClosed(final Detector.Detections<Face> detections, final Face face) {
-
+        Log.i(TAG, "Eyes closed");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Uri ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone ringtone = RingtoneManager.getRingtone(DrivingActivity.this, ringtoneUri);
+                ringtone.play();
+            }
+        });
     }
 
     @Override

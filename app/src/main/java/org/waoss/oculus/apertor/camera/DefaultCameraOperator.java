@@ -18,7 +18,7 @@ public class DefaultCameraOperator implements CameraOperator {
     private static final int RC_HANDLE_GMS = 9001;
     private final Activity activity;
     private CameraSource cameraSource;
-    private boolean isFrontFacing;
+    private boolean isFrontFacing = true;
     private final EyesClosedListener eyesClosedListener;
     private final String tag;
     private CameraSourcePreview cameraSourcePreview;
