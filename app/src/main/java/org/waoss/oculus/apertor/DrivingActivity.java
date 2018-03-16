@@ -5,9 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
@@ -96,9 +95,10 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Uri ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                Ringtone ringtone = RingtoneManager.getRingtone(DrivingActivity.this, ringtoneUri);
-                ringtone.play();
+                final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+                        ToneGenerator.MAX_VOLUME);
+                toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK, 500);
+                toneGenerator.release();
             }
         });
     }
@@ -158,4 +158,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         }
         defaultCameraOperator.createAndStartCameraSource();
     }
+
+
 }
