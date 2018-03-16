@@ -1,10 +1,10 @@
 package org.waoss.oculus.apertor.camera;
 
-public class EyeCloseState {
+public class EyeState {
     private boolean isClosed;
     private long time;
 
-    public EyeCloseState(final boolean isClosed, final long time) {
+    public EyeState(final boolean isClosed, final long time) {
         this.isClosed = isClosed;
         this.time = time;
     }

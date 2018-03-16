@@ -16,8 +16,8 @@ public class OculusFaceTracker extends Tracker<Face> {
     private boolean previousIsLeftOpen;
     private boolean previousIsRightOpen;
     public static final long AVERAGE_BLINK_TIME = 350L;
-    private EyeCloseState currentEyeCloseState;
-    private EyeCloseState previousEyeCloseState = new EyeCloseState(false, System.currentTimeMillis());
+    private EyeState currentEyeState;
+    private EyeState previousEyeState = new EyeState(false, System.currentTimeMillis());
 
     public OculusFaceTracker(EyesClosedListener listener) {
         this.listener = listener;
@@ -32,15 +32,19 @@ public class OculusFaceTracker extends Tracker<Face> {
         isLeftEyeOpen = isEyeOpen(leftEyeIsOpenProbability, previousIsLeftOpen);
         isRightEyeOpen = isEyeOpen(rightEyeIsOpenProbability, previousIsRightOpen);
         if (!isLeftEyeOpen && !isRightEyeOpen) {
-            currentEyeCloseState = new EyeCloseState(true, System.currentTimeMillis());
-            if (currentEyeCloseState.getTime() - previousEyeCloseState.getTime() > AVERAGE_BLINK_TIME) {
+            // Eyes closed state.
+            currentEyeState = new EyeState(true, System.currentTimeMillis());
+            if (previousEyeState.isClosed() &&
+                    currentEyeState.getTime() - previousEyeState.getTime() > AVERAGE_BLINK_TIME) {
                 listener.onEyesClosed(detections, face);
             }
-
         } else {
-            currentEyeCloseState = new EyeCloseState(false, System.currentTimeMillis());
+            // Eyes open state.
+            currentEyeState = new EyeState(false, System.currentTimeMillis());
         }
-        previousEyeCloseState = currentEyeCloseState;
+        if (previousEyeState.isClosed() != currentEyeState.isClosed()) {
+            previousEyeState = currentEyeState;
+        }
     }
 
     private void updatePreviousProportions(final Face face) {
