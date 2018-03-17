@@ -1,6 +1,7 @@
 package org.waoss.oculus.apertor;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.media.AudioManager;
@@ -16,6 +17,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
+import org.waoss.oculus.apertor.map.MapsActivity;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
@@ -130,4 +132,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         defaultCameraOperator.createAndStartCameraSource();
     }
 
+    public void onShowMapButtonClicked(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }
