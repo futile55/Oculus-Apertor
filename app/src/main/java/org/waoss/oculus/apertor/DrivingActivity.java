@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -18,21 +20,43 @@ import android.view.View;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
+import org.waoss.oculus.apertor.location.OculusLocationListener;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
     public static final String TAG = DrivingActivity.class.getSimpleName();
+    public static final Runnable PLAY_BEEP_SOUND = new Runnable() {
+        @Override
+        public void run() {
+            final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
+                    ToneGenerator.MAX_VOLUME);
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK, 500);
+            toneGenerator.release();
+        }
+    };
     private static final int RC_HANDLE_CAMERA_PERM = 2;
+    public static final float LOCATION_REFRESH_DISTANCE = 1;
     private CameraSourcePreview cameraSourcePreview;
     private View root;
     private DefaultCameraOperator defaultCameraOperator;
     private TextToSpeech textToSpeech;
+    public static final long LOCATION_REFRESH_TIME = 2000;
+    private static final int RC_HANDLE_ACCESS_FINE_LOCATION = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driving);
         requestPermissions();
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager
+                .requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE,
+                        new OculusLocationListener(new Runnable() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(PLAY_BEEP_SOUND);
+                            }
+                        }), Looper.getMainLooper());
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,
@@ -54,13 +78,13 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         final String permissions[] = new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION};
 
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
+                Manifest.permission.CAMERA) ||
+                !ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
             return;
         }
 
         final Activity thisActivity = this;
-
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,15 +116,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     @Override
     public void onEyesClosed(final Detector.Detections<Face> detections, final Face face) {
         Log.i(TAG, "Eyes closed");
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                        ToneGenerator.MAX_VOLUME);
-                toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK, 500);
-                toneGenerator.release();
-            }
-        });
+        runOnUiThread(PLAY_BEEP_SOUND);
     }
 
     @Override
@@ -128,7 +144,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
             return;
         }
 
-        if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "Camera permission granted - initialize the camera source");
             defaultCameraOperator.createCameraSource();
             return;
@@ -145,7 +162,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Face Tracker sample")
-                .setMessage("NO permission camera. App sad")
+                .setMessage("NO permission camera or probs gps. App sad. :( :(")
                 .setPositiveButton("ok", listener)
                 .show();
     }
@@ -158,6 +175,5 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         }
         defaultCameraOperator.createAndStartCameraSource();
     }
-
 
 }
