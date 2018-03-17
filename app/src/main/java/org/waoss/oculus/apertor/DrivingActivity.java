@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Looper;
-import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +34,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     private CameraSourcePreview cameraSourcePreview;
     private View root;
     private DefaultCameraOperator defaultCameraOperator;
-    private TextToSpeech textToSpeech;
     public static final long LOCATION_REFRESH_TIME = 2000;
     private static final int RC_HANDLE_ACCESS_FINE_LOCATION = 5;
 
@@ -82,7 +80,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         if (defaultCameraOperator.getCameraSource() != null) {
             defaultCameraOperator.getCameraSource().release();
         }
-        textToSpeech.shutdown();
     }
 
     @Override
@@ -101,10 +98,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     protected void onPause() {
         super.onPause();
         cameraSourcePreview.stop();
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.util.Log;
 public class OculusLocationListener implements LocationListener {
     public static final String TAG = OculusLocationListener.class.getSimpleName();
     private final Runnable activity;
-    private static final double SPEED_LIMIT = 10.0;
+    private static final double SPEED_LIMIT = 1.0;
     private Location currentLocation = null;
     private Location previousLocation = null;
     private double time;
