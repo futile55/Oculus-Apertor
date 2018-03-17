@@ -135,7 +135,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
             case PICK_CONTACT:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri contactData = data.getData();
-                    Cursor cursor = managedQuery(contactData, null, null,
+                    Cursor cursor = getContentResolver().query(contactData, null, null,
                             null, null);
                     if (cursor.moveToFirst()) {
                         String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
