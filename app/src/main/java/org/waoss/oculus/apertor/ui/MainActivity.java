@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, 1);
         } else if (id == R.id.view_contact) {
-            startActivity(new Intent());
+            startActivity(new Intent(this, DisplayContactsActivity.class));
         } else if (id == R.id.contribute) {
             startActivity(new Intent());
         } else if (id == R.id.about) {

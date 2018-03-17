@@ -22,7 +22,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyArR3amEKO2cEOTbXT8KyvKYOBsBMrH0rk" />
 
-        <activity android:name=".DrivingActivity"></activity>
+        <activity android:name=".DrivingActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -31,7 +31,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-
 
         <activity
             android:name=".ui.MainActivity"
@@ -48,6 +47,7 @@
             android:enabled="true" />
 
         <activity android:name=".ExerciseActivity" />
+        <activity android:name=".ui.DisplayContactsActivity"></activity>
     </application>
 
 </manifest>
