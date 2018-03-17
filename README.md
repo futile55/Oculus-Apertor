@@ -9,10 +9,10 @@ The app primarily detects the shutter of the eye and
 makes sure the driver keeps his eyes considerably open
 during the ride.
 
-Salient features of the app include:   
+Salient features of the app include the following:   
 
  * An app that prevent accidents while driving.
- * Forces the user to keep his eyes open.
+ * Forces the user to keep his eyes open while driving.
  * Has an eye exercise if user is feeling sleepy.
  * Can send messages to contacts if an accident occurs.
  * Alerts the driver to keep his phone in-front of him for
