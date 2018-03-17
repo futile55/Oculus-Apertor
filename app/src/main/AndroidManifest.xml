@@ -15,6 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDDyx4sdmsirBzdlmvK6v2-Hmcj7VzosGc" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyArR3amEKO2cEOTbXT8KyvKYOBsBMrH0rk" />
+
         <activity android:name=".DrivingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +48,7 @@
         <service
             android:name=".service.CrashService"
             android:enabled="true" />
+        <service android:name=".map.HospitalService" />
 
         <activity android:name=".ExerciseActivity"></activity>
     </application>

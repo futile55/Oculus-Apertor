@@ -69,6 +69,7 @@ public class CrashService extends Service {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(new SensorEventListener() {
                 Integer smsCount = 0;
+
                 @Override
                 public void onSensorChanged(final SensorEvent sensorEvent) {
                     float x = sensorEvent.values[0];
@@ -109,8 +110,6 @@ public class CrashService extends Service {
                 public void onAccuracyChanged(final Sensor sensor, final int i) {
                 }
             }, sensor, 500);
-
-            stopSelf(msg.arg1);
         }
     }
 }
