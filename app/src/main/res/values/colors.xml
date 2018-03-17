@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="button_pressed">#42f49e</color>
+    <color name="button_focused">#41f486</color>
+    <color name="button_default">#30961e</color>
+    <color name="background_color">#f2e7e6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="darkback">#308499</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="button_selectorcolor">#9E9E9E</color>
+    <color name="danger">#2c8399</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

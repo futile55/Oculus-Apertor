@@ -22,17 +22,6 @@
         android:onClick="onFlipButtonClicked"
         android:text="Flip" />
 
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mapButton"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="280dp"
-        android:onClick="onShowMapButtonClicked"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/preview"
-        android:layout_alignEnd="@+id/preview" />
 
     <Button
         android:text="Contacts"

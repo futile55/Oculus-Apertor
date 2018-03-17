@@ -23,7 +23,6 @@ import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
 import org.waoss.oculus.apertor.map.HospitalService;
-import org.waoss.oculus.apertor.map.MapsActivity;
 import org.waoss.oculus.apertor.service.CrashService;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
@@ -168,10 +167,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         defaultCameraOperator.createAndStartCameraSource();
     }
 
-    public void onShowMapButtonClicked(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,

@@ -22,13 +22,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyArR3amEKO2cEOTbXT8KyvKYOBsBMrH0rk" />
 
-        <activity android:name=".DrivingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".DrivingActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,9 +33,13 @@
         -->
 
 
-        <activity
-            android:name=".map.MapsActivity"
-            android:label="@string/title_activity_maps" />
+        <activity android:name=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.CrashService"
