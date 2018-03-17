@@ -85,7 +85,8 @@ public class CrashService extends Service {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
             sensorManager.registerListener(new SensorEventListener() {
-                Integer smsCount = 0;
+                Integer smsCountFamily = 0;
+                Integer smsCountHospital = 0;
 
                 @Override
                 public void onSensorChanged(final SensorEvent sensorEvent) {
@@ -98,7 +99,7 @@ public class CrashService extends Service {
                     float gZ = z / 9.8f;
 
                     double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-                    if (gForce > 35) {
+                    if (gForce > 1.01) {
                         final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
@@ -112,8 +113,8 @@ public class CrashService extends Service {
                 }
 
                 private void sendSMS() {
-                    smsCount++;
-                    if (smsCount > 5) {
+                    smsCountFamily++;
+                    if (smsCountFamily > 5) {
                         return;
                     }
                     Log.d(TAG, "Into sendSMS()");
@@ -178,7 +179,11 @@ public class CrashService extends Service {
                 }
 
                 private void sendSMSToNearbyHospitals() {
+                    if (smsCountHospital > 5) {
+                        return;
+                    }
                     for (CharSequence phoneNumber : phoneNumbers) {
+                        smsCountHospital++;
                         SmsManager.getDefault().sendTextMessage(phoneNumber.toString(), null, CRASH_TEXT, null, null);
                     }
 

@@ -46,9 +46,6 @@
         <service
             android:name=".service.CrashService"
             android:enabled="true" />
-        <service
-            android:name=".map.HospitalService"
-            android:enabled="true" />
 
         <activity android:name=".ExerciseActivity" />
     </application>
