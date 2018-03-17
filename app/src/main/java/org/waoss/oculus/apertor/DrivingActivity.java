@@ -1,24 +1,30 @@
 package org.waoss.oculus.apertor;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
 import org.waoss.oculus.apertor.map.MapsActivity;
 import org.waoss.oculus.apertor.service.CrashService;
+
+import java.util.ArrayList;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
@@ -34,9 +40,11 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     };
     private static final int RC_HANDLE_CAMERA_PERM = 2;
     public static final float LOCATION_REFRESH_DISTANCE = 1;
+    private static final int PICK_CONTACT = 1;
     private CameraSourcePreview cameraSourcePreview;
     private View root;
     private DefaultCameraOperator defaultCameraOperator;
+    private ListView contactView;
     public static final long LOCATION_REFRESH_TIME = 2000;
     private static final int RC_HANDLE_ACCESS_FINE_LOCATION = 5;
 
@@ -48,6 +56,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         startService(new Intent(this, CrashService.class));
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
+        contactView = findViewById(R.id.contact_view);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,
                 cameraSourcePreview);
         if (savedInstanceState != null) {
@@ -137,4 +146,21 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
+
+    public void onContactsButtonClicked(View view) {
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver
+                .query(ContactsContract.Contacts.CONTENT_URI, null, "Display Name = ", null, null);
+        ArrayList<Contact> contacts = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Contact contact = new Contact();
+            contact.setName(
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
+            contact.setNumber(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+            contacts.add(contact);
+        }
+        ListViewAdapter
+    }
+
+
 }
