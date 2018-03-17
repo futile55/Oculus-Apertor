@@ -57,6 +57,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    private Mode mode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
