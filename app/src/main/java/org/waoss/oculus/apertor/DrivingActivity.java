@@ -1,13 +1,13 @@
 package org.waoss.oculus.apertor;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.ContactsContract;
@@ -23,8 +23,6 @@ import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
 import org.waoss.oculus.apertor.map.MapsActivity;
 import org.waoss.oculus.apertor.service.CrashService;
-
-import java.util.ArrayList;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
@@ -48,12 +46,17 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     public static final long LOCATION_REFRESH_TIME = 2000;
     private static final int RC_HANDLE_ACCESS_FINE_LOCATION = 5;
 
+    public static final String MY_PREFERENCES = "MyPrefs";
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driving);
         requestPermissions();
         startService(new Intent(this, CrashService.class));
+        makeSharedPreferences();
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
         contactView = findViewById(R.id.contact_view);
@@ -77,6 +80,12 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
                                 runOnUiThread(PLAY_BEEP_SOUND);
                             }
                         }), Looper.getMainLooper());
+    }
+
+    private void makeSharedPreferences() {
+        sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
     }
 
     private void requestPermissions() {
@@ -147,19 +156,24 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         startActivity(intent);
     }
 
-    public void onContactsButtonClicked(View view) {
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver
-                .query(ContactsContract.Contacts.CONTENT_URI, null, "Display Name = ", null, null);
-        ArrayList<Contact> contacts = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            Contact contact = new Contact();
-            contact.setName(
-                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-            contact.setNumber(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-            contacts.add(contact);
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        Uri contactData = data.getData();
+        Cursor cursor = getContentResolver().query(contactData, null, null,
+                null, null);
+        if (cursor.moveToFirst()) {
+            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            String number = cursor.getString(phoneIndex);
+            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            String name = cursor.getString(nameIndex);
+            editor.putString("name", name);
+            editor.putString("number", number);
+            editor.commit();
         }
-        ListViewAdapter
+    }
+
+    public void onContactsButtonClicked(View view) {
+
     }
 
 
