@@ -8,6 +8,13 @@ import android.util.Log;
 public class OculusLocationListener implements LocationListener {
     public static final String TAG = OculusLocationListener.class.getSimpleName();
     private final Runnable activity;
+    private static final double SPEED_LIMIT = 10.0;
+    private Location currentLocation = null;
+    private Location previousLocation = null;
+    private double time;
+    private double previousTime;
+    private double currentTime;
+    private double speed;
 
     public OculusLocationListener(final Runnable activity) {
         this.activity = activity;
@@ -15,8 +22,26 @@ public class OculusLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(final Location location) {
-        if (location.getSpeed() > 10) {
-            Log.w(TAG, "Dheere chala!");
+
+        if (previousLocation == null && currentLocation == null) {
+            // Initial state.
+            previousLocation = location;
+            previousTime = 0;
+            return;
+        }
+
+        currentLocation = location;
+        currentTime = System.currentTimeMillis();
+
+        //time in seconds.
+        time = (currentTime - previousTime) / 1000;
+        previousTime = currentTime;
+
+        // speed in m/s
+        speed = previousLocation.distanceTo(currentLocation) / time;
+
+        if (speed > SPEED_LIMIT) {
+            Log.w(TAG, "Dheere chala");
             activity.run();
         }
     }
