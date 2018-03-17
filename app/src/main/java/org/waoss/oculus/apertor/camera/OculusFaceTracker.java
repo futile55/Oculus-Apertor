@@ -18,16 +18,11 @@ public class OculusFaceTracker extends Tracker<Face> {
     public static final long AVERAGE_BLINK_TIME = 350L;
     private EyeState currentEyeState;
     private EyeState previousEyeState = new EyeState(false, System.currentTimeMillis());
-    private long timestamp;
 
     public OculusFaceTracker(EyesClosedListener listener) {
-        this(listener, AVERAGE_BLINK_TIME);
+        this.listener = listener;
     }
 
-    public OculusFaceTracker(final EyesClosedListener listener, final long timestamp) {
-        this.listener = listener;
-        this.timestamp = timestamp;
-    }
 
     @Override
     public void onUpdate(final Detector.Detections<Face> detections, final Face face) {

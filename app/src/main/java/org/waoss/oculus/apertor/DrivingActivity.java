@@ -202,10 +202,4 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         startActivityForResult(intent, PICK_CONTACT);
     }
 
-
-    public void onExerciseButtonClicked(View view) {
-        mode = Mode.EXERCISE;
-        defaultCameraOperator.setMode(mode);
-        defaultCameraOperator.createAndStartCameraSource();
-    }
 }

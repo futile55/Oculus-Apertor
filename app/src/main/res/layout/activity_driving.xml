@@ -42,14 +42,4 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/contact_button"
         android:onClick="onContactsButtonClicked" />
-
-    <Button
-        android:text="Exercise."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/preview"
-        android:layout_alignRight="@+id/contact_button"
-        android:layout_alignEnd="@+id/contact_button"
-        android:onClick="onExerciseButtonClicked"
-        android:id="@+id/button3" />
 </RelativeLayout>

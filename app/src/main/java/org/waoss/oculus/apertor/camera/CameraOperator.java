@@ -3,7 +3,6 @@ package org.waoss.oculus.apertor.camera;
 import android.content.Context;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.face.FaceDetector;
-import org.waoss.oculus.apertor.DrivingActivity;
 
 public interface CameraOperator {
     void createCameraSource();
@@ -19,8 +18,4 @@ public interface CameraOperator {
     boolean isFrontFacing();
 
     void setFrontFacing(boolean isFrontFacing);
-
-    DrivingActivity.Mode getMode();
-
-    void setMode(DrivingActivity.Mode mode);
 }
