@@ -8,6 +8,7 @@ import android.media.ToneGenerator;
 import android.os.*;
 import android.os.Process;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 public class CrashService extends Service {
@@ -16,6 +17,7 @@ public class CrashService extends Service {
     private ServiceHandler serviceHandler;
     private SensorManager sensorManager;
     private Sensor sensor;
+    public static final String TAG = CrashService.class.getSimpleName();
 
     @Override
     public void onCreate() {
@@ -53,7 +55,7 @@ public class CrashService extends Service {
     }
 
     private final class ServiceHandler extends Handler {
-        private static final String CRASH_TEXT = ".This is to inform you that there " +
+        private static final String CRASH_TEXT = "This is to inform you that there " +
                 "has been a car accident and an automatic " +
                 "message has been sent to inform you of the happening.";
 
@@ -77,7 +79,7 @@ public class CrashService extends Service {
                     float gZ = z / 9.8f;
 
                     double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-                    if (gForce > 35) {
+                    if (gForce > 1.01) {
                         final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
@@ -87,13 +89,13 @@ public class CrashService extends Service {
                 }
 
                 private void sendSMS() {
+                    Log.d(TAG, "Into sendSMS()");
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     String number = sharedPreferences.getString("number", "100");
-                    String name = sharedPreferences.getString("name", "lol");
                     if (number != null) {
                         SmsManager.getDefault()
                                 .sendTextMessage(number, null,
-                                        "I hope this message is received by " + name + CRASH_TEXT,
+                                        CRASH_TEXT,
                                         null, null);
                     }
                 }
