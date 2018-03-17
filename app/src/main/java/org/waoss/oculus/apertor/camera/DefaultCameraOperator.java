@@ -109,7 +109,8 @@ public class DefaultCameraOperator implements CameraOperator {
         Detector.Processor<Face> processor;
         if (isFrontFacing) {
             Tracker<Face> faceTracker = new OculusFaceTracker(eyesClosedListener,
-                    getMode() == DrivingActivity.Mode.DRIVING ? OculusFaceTracker.AVERAGE_BLINK_TIME : 10000);
+                    getMode() ==
+                            DrivingActivity.Mode.DRIVING ? OculusFaceTracker.AVERAGE_BLINK_TIME : EXERCISE_MODE_TIME);
             processor = new LargestFaceFocusingProcessor.Builder(detector, faceTracker).build();
         } else {
             MultiProcessor.Factory<Face> factory = new MultiProcessor.Factory<Face>() {
