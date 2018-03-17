@@ -18,6 +18,7 @@ import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
 import org.waoss.oculus.apertor.map.MapsActivity;
+import org.waoss.oculus.apertor.service.CrashService;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
@@ -44,7 +45,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driving);
         requestPermissions();
-
+        startService(new Intent(this, CrashService.class));
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,

@@ -35,6 +35,10 @@
         <activity
             android:name=".map.MapsActivity"
             android:label="@string/title_activity_maps" />
+
+        <service
+            android:name=".service.CrashService"
+            android:enabled="true" />
     </application>
 
 </manifest>
