@@ -8,7 +8,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.*;
 import com.google.android.gms.vision.face.*;
-import org.waoss.oculus.apertor.DrivingActivity;
 
 import java.io.IOException;
 
@@ -23,8 +22,6 @@ public class DefaultCameraOperator implements CameraOperator {
     private final EyesClosedListener eyesClosedListener;
     private final String tag;
     private CameraSourcePreview cameraSourcePreview;
-    private DrivingActivity.Mode mode;
-    public static final long EXERCISE_MODE_TIME = 10000;
 
     public DefaultCameraOperator(final Activity activity, final String tag,
                                  final EyesClosedListener eyesClosedListener,

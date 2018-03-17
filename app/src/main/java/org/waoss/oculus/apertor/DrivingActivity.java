@@ -27,19 +27,13 @@ import org.waoss.oculus.apertor.service.CrashService;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
-
-    public enum Mode {
-        EXERCISE, DRIVING
-    }
-
-
     public static final String TAG = DrivingActivity.class.getSimpleName();
     public static final Runnable PLAY_BEEP_SOUND = new Runnable() {
         @Override
         public void run() {
             final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                     ToneGenerator.MAX_VOLUME);
-            toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK, 500);
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
             toneGenerator.release();
         }
     };
@@ -57,8 +51,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private Mode mode = Mode.DRIVING;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +62,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         root = findViewById(R.id.root);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,
                 cameraSourcePreview);
-        defaultCameraOperator.setMode(mode);
         if (savedInstanceState != null) {
             defaultCameraOperator.setFrontFacing(savedInstanceState.getBoolean("IsFrontFacing"));
         }
