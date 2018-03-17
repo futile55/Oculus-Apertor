@@ -22,6 +22,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.face.Face;
 import org.waoss.oculus.apertor.camera.*;
 import org.waoss.oculus.apertor.location.OculusLocationListener;
+import org.waoss.oculus.apertor.map.HospitalService;
 import org.waoss.oculus.apertor.map.MapsActivity;
 import org.waoss.oculus.apertor.service.CrashService;
 
@@ -57,6 +58,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         setContentView(R.layout.activity_driving);
         requestPermissions();
         startService(new Intent(this, CrashService.class));
+        startService(new Intent(this, HospitalService.class));
         makeSharedPreferences();
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
