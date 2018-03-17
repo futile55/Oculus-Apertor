@@ -194,4 +194,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     }
 
 
+    public void onExerciseButtonClicked(View view) {
+        Intent intent = new Intent(this, ExerciseActivity.class);
+        startActivity(intent);
+    }
 }

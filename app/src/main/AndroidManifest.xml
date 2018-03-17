@@ -41,6 +41,8 @@
         <service
             android:name=".service.CrashService"
             android:enabled="true" />
+
+        <activity android:name=".ExerciseActivity"></activity>
     </application>
 
 </manifest>
