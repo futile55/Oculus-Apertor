@@ -68,6 +68,7 @@ public class CrashService extends Service {
             sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(new SensorEventListener() {
+                Integer smsCount = 0;
                 @Override
                 public void onSensorChanged(final SensorEvent sensorEvent) {
                     float x = sensorEvent.values[0];
@@ -79,7 +80,7 @@ public class CrashService extends Service {
                     float gZ = z / 9.8f;
 
                     double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-                    if (gForce > 1.01) {
+                    if (gForce > 35) {
                         final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
@@ -89,6 +90,10 @@ public class CrashService extends Service {
                 }
 
                 private void sendSMS() {
+                    smsCount++;
+                    if (smsCount > 9) {
+                        return;
+                    }
                     Log.d(TAG, "Into sendSMS()");
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     String number = sharedPreferences.getString("number", "100");

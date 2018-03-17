@@ -27,6 +27,12 @@ import org.waoss.oculus.apertor.service.CrashService;
 
 public class DrivingActivity extends AppCompatActivity implements EyesClosedListener {
 
+
+    public enum Mode {
+        EXERCISE, DRIVING
+    }
+
+
     public static final String TAG = DrivingActivity.class.getSimpleName();
     public static final Runnable PLAY_BEEP_SOUND = new Runnable() {
         @Override
