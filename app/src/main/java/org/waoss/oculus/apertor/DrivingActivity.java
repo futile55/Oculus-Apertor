@@ -186,8 +186,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     }
 
     public void onContactsButtonClicked(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        startActivityForResult(intent, PICK_CONTACT);
+
     }
 
 }
