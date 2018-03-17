@@ -1,6 +1,7 @@
 package org.waoss.oculus.apertor;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -59,7 +60,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         makeSharedPreferences();
         cameraSourcePreview = findViewById(R.id.preview);
         root = findViewById(R.id.root);
-        contactView = findViewById(R.id.contact_view);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,
                 cameraSourcePreview);
         if (savedInstanceState != null) {
@@ -91,7 +91,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     private void requestPermissions() {
         Log.w(TAG, "Camera is not granted permission. Requesting for permission");
 
-        final String permissions[] = new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION};
+        final String permissions[] = new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS};
         ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
     }
 
@@ -128,17 +129,31 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case RC_HANDLE_CAMERA_PERM:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-                    Log.e(TAG, "LOL");
+            case PICK_CONTACT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri contactData = data.getData();
+                    Cursor cursor = managedQuery(contactData, null, null,
+                            null, null);
+                    if (cursor.moveToFirst()) {
+                        String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                        String hasPhone = cursor
+                                .getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                        if (hasPhone.equalsIgnoreCase("1")) {
+                            Cursor phones = getContentResolver()
+                                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                            null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null,
+                                            null);
+                            phones.moveToFirst();
+                            String cNumber = phones
+                                    .getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            editor.putString("number", cNumber);
+                            editor.commit();
+                        }
+                    }
                 }
-                break;
         }
     }
 
@@ -157,23 +172,25 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     }
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        Uri contactData = data.getData();
-        Cursor cursor = getContentResolver().query(contactData, null, null,
-                null, null);
-        if (cursor.moveToFirst()) {
-            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            String number = cursor.getString(phoneIndex);
-            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            String name = cursor.getString(nameIndex);
-            editor.putString("name", name);
-            editor.putString("number", number);
-            editor.commit();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case RC_HANDLE_CAMERA_PERM:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED &&
+                        grantResults[2] == PackageManager.PERMISSION_GRANTED &&
+                        grantResults[3] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Log.e(TAG, "LOL");
+                }
+                break;
         }
     }
 
     public void onContactsButtonClicked(View view) {
-
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, PICK_CONTACT);
     }
 
 

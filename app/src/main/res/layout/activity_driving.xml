@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
-
+        android:onClick="onFlipButtonClicked"
         android:text="Flip" />
 
     <Button
@@ -42,10 +42,4 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/contact_button"
         android:onClick="onContactsButtonClicked" />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:id="@+id/contact_view" />
 </RelativeLayout>

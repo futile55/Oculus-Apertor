@@ -1,12 +1,13 @@
 package org.waoss.oculus.apertor.service;
 
 import android.app.Service;
-import android.content.Intent;
+import android.content.*;
 import android.hardware.*;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.*;
 import android.os.Process;
+import android.telephony.SmsManager;
 import android.widget.Toast;
 
 public class CrashService extends Service {
@@ -52,6 +53,10 @@ public class CrashService extends Service {
     }
 
     private final class ServiceHandler extends Handler {
+        private static final String CRASH_TEXT = ".This is to inform you that there " +
+                "has been a car accident and an automatic " +
+                "message has been sent to inform you of the happening.";
+
         public ServiceHandler(Looper looper) {
             super(looper);
         }
@@ -77,6 +82,19 @@ public class CrashService extends Service {
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
                         toneGenerator.release();
+                        sendSMS();
+                    }
+                }
+
+                private void sendSMS() {
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    String number = sharedPreferences.getString("number", "100");
+                    String name = sharedPreferences.getString("name", "lol");
+                    if (number != null) {
+                        SmsManager.getDefault()
+                                .sendTextMessage(number, null,
+                                        "I hope this message is received by " + name + CRASH_TEXT,
+                                        null, null);
                     }
                 }
 
