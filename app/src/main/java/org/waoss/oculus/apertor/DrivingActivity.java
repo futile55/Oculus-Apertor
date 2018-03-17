@@ -57,7 +57,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private Mode mode;
+    private Mode mode = Mode.DRIVING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         root = findViewById(R.id.root);
         defaultCameraOperator = new DefaultCameraOperator(this, TAG, this,
                 cameraSourcePreview);
+        defaultCameraOperator.setMode(mode);
         if (savedInstanceState != null) {
             defaultCameraOperator.setFrontFacing(savedInstanceState.getBoolean("IsFrontFacing"));
         }
@@ -203,7 +204,8 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
 
 
     public void onExerciseButtonClicked(View view) {
-        Intent intent = new Intent(this, ExerciseActivity.class);
-        startActivity(intent);
+        mode = Mode.EXERCISE;
+        defaultCameraOperator.setMode(mode);
+        defaultCameraOperator.createAndStartCameraSource();
     }
 }
