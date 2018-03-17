@@ -20,11 +20,11 @@
         <menu>
             <item
                 android:id="@+id/contribute"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_github"
                 android:title="Contribute" />
             <item
                 android:id="@+id/about"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_info_outline_black_24dp"
                 android:title="About" />
         </menu>
     </item>
