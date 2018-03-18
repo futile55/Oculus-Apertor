@@ -184,9 +184,4 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
                 break;
         }
     }
-
-    public void onContactsButtonClicked(View view) {
-
-    }
-
 }
