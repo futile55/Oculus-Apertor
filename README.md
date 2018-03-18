@@ -17,5 +17,8 @@ Salient features of the app include the following:
  * Can send messages to contacts if an accident occurs.
  * Alerts the driver to keep his phone in-front of him for
  the app to be functional.
+ * In case of car crash, message is sent to the contact detail
+ submitted by the user and also to the nearby hospitals which 
+ might be indispensable.
  
  
