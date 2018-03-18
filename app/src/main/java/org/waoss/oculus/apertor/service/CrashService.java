@@ -90,12 +90,12 @@ public class CrashService extends Service {
                     float gZ = z / 9.8f;
 
                     double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-                    if (gForce > 1.1) {
+                    if (gForce > 35) {
                         final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
                         toneGenerator.release();
-                        sendSMS();
+                        sendSMSToFamily();
                         if (!hasFilledPhoneNumbers) {
                             try {
                                 fillPhoneNumbers();
@@ -107,12 +107,12 @@ public class CrashService extends Service {
                     }
                 }
 
-                private void sendSMS() {
+                private void sendSMSToFamily() {
                     smsCountFamily++;
                     if (smsCountFamily > 5) {
                         return;
                     }
-                    Log.d(TAG, "Into sendSMS()");
+                    Log.d(TAG, "Into sendSMSToFamily()");
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     String number = sharedPreferences.getString("number", "100");
                     if (number != null) {
