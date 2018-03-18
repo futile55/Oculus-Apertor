@@ -15,10 +15,10 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="110dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:elevation="7dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_verified_user_white_24dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -33,6 +33,6 @@
         android:layout_width="wrap_content"
         android:elevation="4dp"
         android:layout_height="wrap_content"
-        android:text="user@gmial.com" />
+        android:text="user@gmail.com" />
 
 </LinearLayout>

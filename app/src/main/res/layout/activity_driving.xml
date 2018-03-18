@@ -13,22 +13,13 @@
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp" />
 
-    <Button
-        android:id="@+id/flipButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        android:onClick="onFlipButtonClicked"
-        android:text="Flip" />
 
-
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:text="Contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/contact_button"
-        android:onClick="onContactsButtonClicked" />
+        android:onClick="onFlipButtonClicked"
+        android:layout_alignBottom="@+id/preview"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

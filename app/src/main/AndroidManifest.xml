@@ -47,7 +47,7 @@
             android:enabled="true" />
 
         <activity android:name=".ExerciseActivity" />
-        <activity android:name=".ui.DisplayContactsActivity"></activity>
+        <activity android:name=".ui.DisplayContactsActivity" />
     </application>
 
 </manifest>

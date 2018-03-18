@@ -26,6 +26,18 @@
                 android:layout_marginRight="18dp" />
 
             <TextView
+                android:id="@+id/emptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/cardview_image"
+                android:paddingBottom="5dp"
+                android:text=" "
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <TextView
                 android:id="@+id/cardview_list_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,6 +45,8 @@
                 android:layout_toRightOf="@+id/cardview_image"
                 android:paddingBottom="5dp"
                 android:text=" "
+                android:textStyle="bold"
+                android:textAlignment="gravity"
                 android:textSize="24sp" />
 
             <TextView

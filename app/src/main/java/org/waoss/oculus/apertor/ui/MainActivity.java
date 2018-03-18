@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        //getActionBar().setTitle("Home");
         CardView c1 = (CardView) findViewById(R.id.android_card_view_example1);
         c1.setOnClickListener(new View.OnClickListener() {
             @Override
