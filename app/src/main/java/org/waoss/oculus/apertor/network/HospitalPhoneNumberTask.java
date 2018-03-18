@@ -1,6 +1,7 @@
 package org.waoss.oculus.apertor.network;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -28,6 +29,14 @@ public class HospitalPhoneNumberTask extends AsyncTask<Void, Void, List<CharSequ
 
     @Override
     protected List<CharSequence> doInBackground(final Void... voids) {
+        String apiKey = "AIzaSyDgCIza5WBeQJq1ievpzwGngiswHBxgGwM";
+        try {
+            apiKey = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA).metaData
+                    .getString("com.google.android.geo.API_KEY");
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "{}", e);
+        }
         final List<CharSequence> phoneNumbers = new ArrayList<>();
         geoDataClient = Places.getGeoDataClient(context, null);
         HttpUrl.Builder httpUrlBuilder = HttpUrl
@@ -35,7 +44,7 @@ public class HospitalPhoneNumberTask extends AsyncTask<Void, Void, List<CharSequ
         httpUrlBuilder.addQueryParameter("location", "25.4263508,81.7732333");
         httpUrlBuilder.addQueryParameter("radius", "1000");
         httpUrlBuilder.addQueryParameter("types", "hospital");
-        httpUrlBuilder.addQueryParameter("key", "AIzaSyDDyx4sdmsirBzdlmvK6v2-Hmcj7VzosGc");
+        httpUrlBuilder.addQueryParameter("key", apiKey);
         HttpUrl httpUrl = httpUrlBuilder.build();
         Request request = new Request.Builder()
                 .url(httpUrl)

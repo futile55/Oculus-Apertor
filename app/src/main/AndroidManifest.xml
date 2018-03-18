@@ -17,11 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDDyx4sdmsirBzdlmvK6v2-Hmcj7VzosGc" />
-        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyArR3amEKO2cEOTbXT8KyvKYOBsBMrH0rk" />
+            android:value="AIzaSyDgCIza5WBeQJq1ievpzwGngiswHBxgGwM" />
 
         <activity android:name=".DrivingActivity" />
         <!--

@@ -22,4 +22,5 @@ Alerts the driver to keep his phone in-front of him for the app to be functional
     <string name="contribution">Feel free to fork the github repo - "http://github.com/rohan23chhabra/Oculus-Apertor
         ". We would love to have open source contributions towards the project from as many as we can. This app is intended to be
     an accident prevention app and any help from anyone is precious in that regard.</string>
+    <string name="title_activity_map">Map</string>
 </resources>

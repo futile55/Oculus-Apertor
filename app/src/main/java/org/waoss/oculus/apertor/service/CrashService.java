@@ -90,7 +90,7 @@ public class CrashService extends Service {
                     float gZ = z / 9.8f;
 
                     double gForce = Math.sqrt(gX * gX + gY * gY + gZ * gZ);
-                    if (gForce > 35) {
+                    if (gForce > 1.1) {
                         final ToneGenerator toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                 ToneGenerator.MAX_VOLUME);
                         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP);
