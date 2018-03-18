@@ -1,6 +1,9 @@
 package org.waoss.oculus.apertor.ui;
 
+import android.app.Activity;
 import android.content.*;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.*;
@@ -17,6 +20,9 @@ import org.waoss.oculus.apertor.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int PICK_CONTACT = 1;
+    private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
                 boolean isFirstTime = sharedPreferences.getBoolean("isFirstTime", true);
                 if (isFirstTime) {
                     Intent intent = new Intent(MainActivity.this, SplashActivity.class);
@@ -119,5 +126,34 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case PICK_CONTACT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri contactData = data.getData();
+                    Cursor cursor = getContentResolver().query(contactData, null, null,
+                            null, null);
+                    if (cursor.moveToFirst()) {
+                        String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                        String hasPhone = cursor
+                                .getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                        if (hasPhone.equalsIgnoreCase("1")) {
+                            Cursor phones = getContentResolver()
+                                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                            null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null,
+                                            null);
+                            phones.moveToFirst();
+                            String cNumber = phones
+                                    .getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            editor.putString("number", cNumber);
+                            editor.commit();
+                        }
+                    }
+                }
+        }
     }
 }

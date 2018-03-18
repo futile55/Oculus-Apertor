@@ -1,17 +1,13 @@
 package org.waoss.oculus.apertor;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.*;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +35,7 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
     };
     private static final int RC_HANDLE_CAMERA_PERM = 2;
     public static final float LOCATION_REFRESH_DISTANCE = 1;
-    private static final int PICK_CONTACT = 1;
+
     private CameraSourcePreview cameraSourcePreview;
     private View root;
     private DefaultCameraOperator defaultCameraOperator;
@@ -129,34 +125,6 @@ public class DrivingActivity extends AppCompatActivity implements EyesClosedList
         defaultCameraOperator.startCameraSource();
     }
 
-    @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case PICK_CONTACT:
-                if (resultCode == Activity.RESULT_OK) {
-                    Uri contactData = data.getData();
-                    Cursor cursor = getContentResolver().query(contactData, null, null,
-                            null, null);
-                    if (cursor.moveToFirst()) {
-                        String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                        String hasPhone = cursor
-                                .getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                        if (hasPhone.equalsIgnoreCase("1")) {
-                            Cursor phones = getContentResolver()
-                                    .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                            null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null,
-                                            null);
-                            phones.moveToFirst();
-                            String cNumber = phones
-                                    .getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            editor.putString("number", cNumber);
-                            editor.commit();
-                        }
-                    }
-                }
-        }
-    }
 
     public void onFlipButtonClicked(final View view) {
         defaultCameraOperator.setFrontFacing(!defaultCameraOperator.isFrontFacing());
