@@ -1,6 +1,6 @@
 package org.waoss.oculus.apertor.ui;
 
-import android.content.Intent;
+import android.content.*;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.*;
@@ -22,7 +22,22 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //getActionBar().setTitle("Home");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                boolean isFirstTime = sharedPreferences.getBoolean("isFirstTime", true);
+                if (isFirstTime) {
+                    Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+                    startActivity(intent);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isFirstTime", true);
+                    editor.commit();
+                }
+            }
+        });
+        thread.start();
+
         CardView c1 = (CardView) findViewById(R.id.android_card_view_example1);
         c1.setOnClickListener(new View.OnClickListener() {
             @Override
