@@ -9,4 +9,17 @@
     <string name="title_activity_maps">Map</string>
     <string name="shared_preferences_file">OculusApertor</string>
     <string name="app_intro_skip">Skip</string>
+    <string name="about">About the Oculus Apertor</string>
+    <string name="about_description">Most of the accidents happen due to the driver feeling drowsy, while being on a long drive or on a highway. Therefore to save those precious lives, the app comes to the rescue. Prevention is better than cure and certainly better than being deceased. The app primarily detects the shutter of the eye and makes sure the driver keeps his eyes considerably open during the ride.
+
+Salient features of the app include the following:\n
+
+An app that prevent accidents while driving.\n
+Forces the user to keep his eyes open while driving.\n
+Has an eye exercise if user is feeling sleepy.\n
+Can send messages to contacts if an accident occurs.\n
+Alerts the driver to keep his phone in-front of him for the app to be functional.\n</string>
+    <string name="contribution">Feel free to fork the github repo - "http://github.com/rohan23chhabra/Oculus-Apertor
+        ". We would love to have open source contributions towards the project from as many as we can. This app is intended to be
+    an accident prevention app and any help from anyone is precious in that regard.</string>
 </resources>

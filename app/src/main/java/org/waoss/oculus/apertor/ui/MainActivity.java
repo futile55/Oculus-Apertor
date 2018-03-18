@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.view_contact) {
             startActivity(new Intent(this, DisplayContactsActivity.class));
         } else if (id == R.id.contribute) {
-            startActivity(new Intent());
+            startActivity(new Intent(this, ContributingActivity.class));
         } else if (id == R.id.about) {
-            startActivity(new Intent());
+            startActivity(new Intent(this, AboutActivity.class));
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

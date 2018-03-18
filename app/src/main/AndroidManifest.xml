@@ -52,6 +52,8 @@
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/FullscreenTheme" />
+        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.ContributingActivity"></activity>
     </application>
 
 </manifest>
