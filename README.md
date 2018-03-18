@@ -23,7 +23,7 @@ Salient features of the app include the following:
  
  ## Screenshots
  
- ![Activity 1 Fragment 1](https://doc-0s-74-docs.googleusercontent.com/docs/securesc/bo920roip79mm0b8qed762pi08n2a1nv/50pgt19a31og0luo9k9l9ksd4kn4sif4/1521352800000/09618367473069244539/09618367473069244539/0BwsfGLziY8JseC1SNHF1Z2Q5ZWxqRldmS0ZNV3BWaEZGc3BN?e=download&nonce=8ojp27hnd3oj4&user=09618367473069244539&hash=8t0kp4ckn0gkm2rdkiegu3afb6lmq649)
+ ![Activity 1 Fragment 1](https://doc-0s-74-docs.googleusercontent.com/docs/securesc/bo920roip79mm0b8qed762pi08n2a1nv/50pgt19a31og0luo9k9l9ksd4kn4sif4/1521352800000/09618367473069244539/09618367473069244539/0BwsfGLziY8JseC1SNHF1Z2Q5ZWxqRldmS0ZNV3BWaEZGc3BN?e=download)
  
  ![Activity 1 Fragment 2](https://doc-0c-74-docs.googleusercontent.com/docs/securesc/bo920roip79mm0b8qed762pi08n2a1nv/ti3b3tmrr3u17dglls0tagg206h98l9n/1521352800000/09618367473069244539/09618367473069244539/0BwsfGLziY8JsZHBQN3A0Wlo4c3FfNkNsalFXQ1Y0RTMtdXQw?e=download)
  
